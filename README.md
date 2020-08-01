@@ -10,3 +10,4 @@ CSV-to-HTML requires the user to download the finished Google Sheet as a CSV, up
 
 ### References:
 https://github.com/derekeder/csv-to-html-table
+https://github.com/yeskarthik/CSV-to-HTML-report-generator/blob/master/csvtohtmls.py

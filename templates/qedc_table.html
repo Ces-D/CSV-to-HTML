@@ -1,18 +1,17 @@
 <table class="table table-bordered table-hover table-condensed">
     <thead>
         <tr>
-            {% for header in headers %}
+            {% for column in columns %}
             <th>
-                {{header}}
+                {{column}}
             </th>
             {% endfor %}
         </tr>
     </thead>
-        {% for row_heading in table %}
+        {% for item in items %}
         <tr>
-            {% for text in row %}
             <td>
-                
+                {{item}}
             </td>
         </tr>
     <tbody>

@@ -1,84 +1,72 @@
 import os
 import time
 import csv
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
 class CSVToHTML:
-    def __init__(self,template_name):
+    def __init__(self, template_name="CSV-to-Html"):
         self.project_dir = os.path.dirname(os.path.abspath(__file__))       # Get the projects directory
-        self.csv_dir = os.path.join(self.project_dir,"CSV_Files")           # Get the downloaded CSV files dir
-        self.csv_file = None                                                # CSV file is empty until read                
-        self.templates_dir = os.path.join(self.project_dir,"templates")
-        self.template = template_name
-    
-    def set_jinja(self):
-        """Creates the jinja environment and renders the template chosen"""
-        env = Environment(
-            loader=FileSystemLoader(self.templates_dir),
-            autoescape=select_autoescape(["html", "xml", "j2"])
-        )
-        template = env.get_template(self.template)
-
+        self.csv_dir = os.path.join(self.project_dir, "CSV_Files")
+        self.csv_file = None
+        self.templates_dir = os.path.join(self.project_dir, "templates")
+        self.template_name = template_name
 
     def read_csv(self, csv_file_path):
         """Takes a given csv_file_path and returns the csv.reader object"""
-        with open(input_file_path, mode="rb") as input_file:
-            self.csv_file = csv.reader(input_file) # return <_csv.reader object at 0x000001D2463D5820>
+        with open(csv_file_path, mode="r") as input_file:
+            # return <_csv.reader object at 0x000001D2463D5820>
+            read_csv = csv.reader(input_file, delimiter=",")
+            list_read_csv = []
+            for row in read_csv:
+                list_read_csv.append(row)
+            self.csv_file = list_read_csv
 
-    def get_csv_items(self):
-        """Takes the read csv file and appends each row to list, all_csv_rows. Returns all_csv_rows. Requires header always be present"""
-        csv_object = self.csv_file  # created in read_csv()
-        all_csv_rows = []
-        for row in csv_object:
-            all_csv_rows += row
-        return all_csv_rows
-    
-    def get_headers(self):
-        """Takes list of csv items and extracts first row aka list containing headers. Return headers"""
-        all_csv_rows = self.get_csv_items() # list of all_csv_rows
-        headers = all_csv_rows[0]
-        return headers
+    def get_headers_and_rows(self, csv_file_path):
+        csv = self.read_csv(csv_file_path)
+
+        csv_headers = [self.csv_file[0]]
+
+        csv_rows = [row for row in self.csv_file[1:-1]]
+        #print(csv_headers,"\n\n\n", csv_rows)
+        return csv_headers, csv_rows
+
+    def write_to_html(self):
+        i = 1 
+        csv_headers, csv_rows = self.get_headers_and_rows()
+        new_html = self.templates_dir + self.template_name + ".html"
+        f = open(new_html,'w')
+        f.write('<html><head>' + self.template_name + '</head><body><table>')
+        for row in csv_rows:
+            print (each)
+            f.write('<tr><td><b>')
+            f.write(b[j]+':')
+            f.write('</b></td><td>')
+            f.write(each)
+            f.write('</td></tr>')
+            f.write('\n')
+            print('/n')
+            j+=1
+        f.write('</table></body><html>')
+        f.close()
+
+        for header in csv_headers:
+            f.write("<thead>")
+        for row in csv_rows:
+            f.write(thead)
 
 
-    def convert_to_html(self, csv):
-        """Should take in a csv file path and run all self.functions. Return converted csv to html template """
-        caption = kwargs.get("caption") or "Table"
-        display_length = kwargs.get("display_length") or -1
-        height = kwargs.get("height") or "70vh"
-
-        default_length_menu = [-1, 10, 25, 50]
-        pagination = options.get("pagination")
-        virtual_scroll_limit = options.get("virtual_scroll")
-
-        # Change % to vh
-        height = height.replace("%", "vh")
-
-        # Header columns
-        columns = []
-        for header in table_headers:
-            columns.append({"title": header})
-
-        # Data table options
-        datatable_options = {
-            "columns": columns,
-            "data": table_items,
-            "iDisplayLength": display_length,
-            "sScrollX": "100%",
-            "sScrollXInner": "100%"
-        }
-        return template(datatable_options)
 
     def loop_through_csv_files(self):
         with os.scandir(self.csv_dir) as input_file:
             for csv in input_file:
                 if csv != None:
-                    return convert_to_html(csv) # function that actually converts to html
+                    # function that actually converts to html
+                    return self.get_headers_and_rows(csv)
                 else:
                     continue
-    
+
 
 csv_to_html = CSVToHTML()
 csv = csv_to_html.loop_through_csv_files()
-print(csv)
 
