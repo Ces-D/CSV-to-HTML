@@ -1,20 +1,19 @@
 <table class="table table-bordered table-hover table-condensed">
-    <thead>
-        <tr>
-            {% for column in columns %}
-            <th>
-                {{column}}
-            </th>
-            {% endfor %}
-        </tr>
-    </thead>
-        {% for item in items %}
-        <tr>
-            <td>
-                {{item}}
-            </td>
-        </tr>
-    <tbody>
-        
-    </tbody>
+
+    {% for head in headers %}
+    <tr>
+        {% for item in head %}
+        <th>{{item}}</th>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+    {% for row in rows %}
+    <tr>
+        {% for item in row %}
+        <td>{{item}}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    
 </table>
