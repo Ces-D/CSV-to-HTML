@@ -24,11 +24,6 @@ CSV-to-HTML requires the user to download the finished Google Sheet as a CSV, up
 ```
 class CSVToHTML:
     def __init__(self, template= "example.html", header_pos= 0, delimiter= ","):
-        self.csv_dir = os.path.join(project_dir, "CSV_Files")
-        self.csv_file = None
-        self.template = template
-        self.delimiter = delimiter
-        self.header_pos = header_pos
 ```
 
 ### References:
