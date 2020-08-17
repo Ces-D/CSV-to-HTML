@@ -9,11 +9,11 @@ templates_dir = os.path.join(project_dir, "templates")       # Get the projects 
 env = Environment(loader=FileSystemLoader(templates_dir))
 
 class CSVToHTML:
-    def __init__(self, template= "example.html", header_pos= 0, delimiter= ","):
+    def __init__(self, template= "example.html", header_pos= 0, delimeter= ","):
         self.csv_dir = os.path.join(project_dir, "CSV_Files")
         self.csv_file = None
         self.template = template
-        self.delimiter = delimiter
+        self.delimeter = delimeter
         self.header_pos = header_pos
 
     def read_csv(self, csv_file_path):
@@ -71,11 +71,12 @@ class CSVToHTML:
                 if csv != None:
                     self.csv_file = csv
                     # function that actually converts to html
-                    return self.save()
+                    return self.save(self.csv_file)
                 else:
                     continue
 
 
 
-csv_to_html = CSVToHTML()
-csv = csv_to_html.loop_through_and_print()
+csv_to_html = CSVToHTML(template="covid_resources_home.html", header_pos=4)
+csv = csv_to_html.loop_through_and_save()
+

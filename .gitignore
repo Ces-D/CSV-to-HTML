@@ -501,3 +501,7 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,python,venv
+
+templates\covidresources.html
+covid_resources_home.html
+templates\covid_resources_home.html
